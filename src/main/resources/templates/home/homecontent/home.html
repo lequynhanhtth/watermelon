@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home/layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Watermelon</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <header>
+        <div class="landing">
+            <div class="home-wrap">
+                <div class="home-inner text-center">
+                    <img src="/images/background.png" style="width:100%;" alt="" srcset="">
+                    <div class="caption text-center">
+                        <h1 >
+                            <th:block th:text="#{header.welcome}"></th:block>
+                        </h1>
+                        <h3>Brand Local LyLy</h3>
+                        <a class="btn btn-light btn-lg" href="/home/product">
+                            <th:block th:text="#{header.shopnow}"></th:block>                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid body-content">
+        <div class="row pt-5" id="centerText">
+            <h1 th:text="#{header.bestseller}"></h1>
+        </div>
+        <div class="row pt-2" id="centerText">
+            <a class="btn btn-outline-info btn-lg" href="/home/product/sortprice?field=rate"><th:block th:text="#{header.seeall}"></th:block></a>
+        </div>
+        <div class="row colmedia pt-5">
+            <div th:each=" item : ${products.content}" class="col-3 mt-4">
+                <div class="card" style="height: 600px">
+                    <a th:href="@{'/home/productdetail/'+${item.id}}"  class="card-body">
+                        <div class="imgBox">
+                            <div th:if="${item.quantity==0}" class="hethang text-center">
+                                <h2 th:text="#{header.outofstock}"></h2>
+                            </div>
+                            <img th:src="@{'/images/'+${item.brand.id}+'/'+${item.image1}}" alt="">
+                            <img th:src="@{'/images/'+${item.brand.id}+'/'+${item.image2}}" alt="">
+                        </div>
+                    </a>
+                    <div class="card-footer text-center titleproduct">
+                        <p th:text="${item.brand.name}"></p>
+                        <a th:href="@{'/home/productdetail/'+${item.id}}" th:text="${item.name}"></a>
+                        <br>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <h3>
+                            [[${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}]] VND
+                            VNĐ
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

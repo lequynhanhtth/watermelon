@@ -1,0 +1,113 @@
+!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+  <footer th:fragment="footer" class="text-center text-lg-start bg-light text-muted" style="background-color: white;">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+      <!-- Left -->
+      <div class="me-5 d-none d-lg-block">
+        <span>Get connected with us on social networks:</span>
+      </div>
+      <!-- Left -->
+
+      <!-- Right -->
+      <div>
+        <a href="" class="mr-4 text-reset">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="" class="mr-4 text-reset">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="" class="mr-4 text-reset">
+          <i class="fab fa-google"></i>
+        </a>
+        <a href="" class="mr-4 text-reset">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="" class="mr-4 text-reset">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="" class="mr-4 text-reset">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Links  -->
+    <section class="">
+      <div class="container text-center text-md-start mt-5">
+        <!-- Grid row -->
+        <div class="row mt-3">
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <!-- Content -->
+            <h6 class="text-uppercase fw-bold mb-4">
+              <i class="fas fa-gem me-3"></i> <th:block th:text="#{footer.aboutus}"></th:block>
+            </h6>
+            <p th:text="#{footer.aboutusnt}">
+
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4  text-left">
+
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 text-left">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4" th:text="#{footer.information}">
+              Thông tin
+            </h6>
+            <p class="mt-2">
+              <a href="#!" class="text-reset" style="font-size: 16px"  th:text="#{footer.introduce}">Giới thiệu</a>
+            </p>
+            <p class="mt-2">
+              <a href="#!" class="text-reset" style="font-size: 16px" th:text="#{footer.privacyPolicy}">Chính sách bảo mật</a>
+            </p>
+            <p class="mt-2">
+              <a href="#!" class="text-reset" style="font-size: 16px" th:text="#{footer.rules}">Điều khoản</a>
+            </p>
+            <p class="mt-2">
+              <a href="#!" class="text-reset" style="font-size: 16px">SiteMap</a>
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4  text-left">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold mb-4" th:text="#{footer.support}">
+              Hổ trợ
+            </h6>
+            <p class="mb-3"><i class="fas fa-home me-3 mr-2"></i> Quảng Nam</p>
+            <p class="mb-3">
+              <i class="fas fa-envelope me-3 mr-2"></i>
+              iuly17@gmail.com
+            </p>
+            <p class="mb-3"><i class="fas fa-phone me-3 mr-2"></i> + 01 072 001 08</p>
+            <p class="mb-3"><i class="fas fa-print me-3 mr-2"></i> + 01 072 001 08</p>
+          </div>
+          <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+      </div>
+    </section>
+    <!-- Section: Links  -->
+
+  </footer>
+
+</body>
+</html>

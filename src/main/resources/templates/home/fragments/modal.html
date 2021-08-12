@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="modal" th:classappend="${errorMessage != null ? 'hide' : ''}"
+     th:styleappend="${errorMessage != null ? 'display:block':'display:none'}" th:fragment="modal" id="modalError"
+     tabindex="-1" role="dialog" aria-labelledby=""
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">[[${errorMessage}]]</h5>
+                <a href="/home/index" id="close" class="close" data-dismiss="modal" onclick="Close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <form th:action="@{'/user/loginmodal'}" th:method="post">
+                <div th:if="${messageLogin!=null}" class="alert alert-danger text-center"
+                     style="font-size: 16px;padding: 5px 15px;border-radius: 99px;margin-top: 10px" th:text="${messageLogin}"></div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label th:text="#{login.username}">Tên đăng nhập</label>
+                        <input class="form-control" th:name="username" type="text" th:placeholder="#{login.username}"
+                               th:value="${username}">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" type="password" th:name="password"
+                               th:placeholder="#{login.password}" th:value="${password}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="/home/index" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                    <button type="submit" class="btn btn-primary">
+                        <th:block th:text="#{nav.login}"></th:block>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function Close() {
+        document.getElementById("modalError").style.display = "none";
+    }
+</script>
+</body>
+</html>

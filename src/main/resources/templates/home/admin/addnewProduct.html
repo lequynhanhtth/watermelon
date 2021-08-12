@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home/layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Sản phẩm</h1>
+    <form th:action="@{/admin/addproduct}" method="post" th:object="${product}" enctype="multipart/form-data">
+        <div class="row">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <h3>Thêm sản phẩm</h3>
+                </div>
+                <div class="row">
+                    <p>Thên sản phẩm vào danh mục bán</p>
+                </div>
+
+                <hr style="width: 1400px;margin-left:0 ;  "/>
+
+                <div class="row" style="margin-top: 50px;">
+                    <div class="col-8 ">
+                        <div class="row p-0 mt-3">
+                            <input type="hidden"  th:name="id"/>
+                            <input type="hidden" th:value="5" th:name="rate"/>
+                            <input type="hidden" th:value="true" th:name="status"/>
+                            <div class="col-3 mt-2 text-left">
+                                <p>Tên</p>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" style="width: 80%;font-weight: 300;" th:value="Áo"
+                                       type="text" th:name="name">
+                            </div>
+                        </div>
+                        <div class="row p-0 mt-3">
+                            <div class="col-3 mt-2 text-left">
+                                <p>Giá</p>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                       th:value="0" type="number" th:name="price">
+                            </div>
+                        </div>
+                        <div class="row p-0 mt-3">
+                            <div class="col-3 mt-2 text-left">
+                                <p>Số lượng</p>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                       th:value="0" type="number" th:name="quantity">
+                            </div>
+                        </div>
+                        <div class="row p-0 mt-3">
+                            <div class="col-3 mt-2 text-left">
+                                <p>Hảng</p>
+                            </div>
+                            <div class="col-9">
+                                <select class="form-control" style="width: 80%;font-weight: 300;" th:name="brand">
+                                    <th:block th:each="x:${brands}">
+                                        <option th:value="${x.id}">[[${x.name}]]</option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row p-0 mt-3">
+                            <div class="col-3 mt-2 text-left">
+                                <p>Danh mục</p>
+                            </div>
+                            <div class="col-9">
+                                <select class="form-control" style="width: 80%;font-weight: 300;" name="category">
+                                    <th:block th:each="x:${categories}">
+                                        <option th:value="${x.id}">[[${x.name}]]</option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4 pl-0">
+                        <div>
+                            <img id="previewImg" th:src="@{'images/lyly.jpg'}" width="100px" style="margin-left: 40px;"
+                                 alt="Placeholder">
+                            <div class="row mt-4 ml-4 text-center ">
+                                <input type="file" style="width: 200px; padding: 0;" name="photo1"
+                                       class="form-control-user" onchange="previewFile(this);" required>
+                            </div>
+                        </div>
+                        <div>
+                            <img id="previewImg1" th:src="@{'images/lyly.jpg'}"  width="100px"
+                                 style="margin-top: 20px;margin-left: 40px;" alt="Placeholder">
+                            <div class="row mt-4 ml-4 text-center ">
+                                <input type="file" style="width: 200px; padding: 0;" name="photo2"
+                                       class="form-control-user" onchange="previewFile1(this);" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  p-0 mt-3">
+                    <button type="submit" style="margin-left: 50px;" class="btn btn-primary"> Thêm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home/layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Watermelon</title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid body-content  title-web float-left pt-4"
+     style="background-color: #f3f3f3e8; padding-bottom: 80px;">
+    <div class="row mt-4">
+        <p > <th:block th:text="#{nav.home}"></th:block> / <strong th:text="#{cart.cart}">Giỏ hàng</strong></p>
+    </div>
+    <div class="row cart mt-5 ">
+        <div class="col-8  ">
+            <div class="row mr-4">
+                <table class="table ">
+                    <thead>
+                    <tr>
+                        <th scope="col" th:text="#{nav.product}">Sản phẩm</th>
+                        <th scope="col" th:text="#{cart.price}">Giá</th>
+                        <th scope="col" th:text="#{cart.Quantity}">Số lượng</th>
+                        <th scope="col" th:text="#{cart.provisional}">Tạm tính</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cart : ${carts}">
+                        <form th:action="@{'/user/cart/update/'+${cart.id}}">
+                            <input type="hidden" th:name="size" th:value="${cart.size}">
+                            <td><a th:href="@{'/user/cart/delete/'+${cart.id}+'/'+${cart.size}}"><i
+                                    class="fa fa-times-circle-o"
+                                    aria-hidden="true"></i></a>
+                                <img th:src="@{'/images/'+${cart.product.brand.id}+'/'+${cart.product.image1}}" alt="">
+                                <a href="#" style="font-size: 12px">[[${cart.product.name}]] ([[${cart.size}]])</a>
+                            </td>
+                            <td>
+                                [[${#numbers.formatDecimal(cart.product.price, 0, 'COMMA', 0, 'POINT')}]]
+                                VNĐ
+                            </td>
+                            <td><input type="number" th:value="${cart.quantity}" onblur="this.form.submit()"
+                                       th:name="soluong" min="1" class="form-control"></td>
+                            <td>
+                                [[${#numbers.formatDecimal(cart.product.price * cart.quantity, 0, 'COMMA', 0,
+                                'POINT')}]]
+                                VNĐ
+                            </td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <a class="btn btn-outline-danger" href="/home/product" role="button"> <i class="fa fa-arrow-left"
+                                                                                         aria-hidden="true"></i>Tiếp
+                    <th:block th:text="#{cart.seeProduct}"></th:block></a>
+
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row mt-2">
+                <h3 th:text="#{cart.toltalcart}">Cộng giỏ hàng</h3>
+            </div>
+            <hr>
+            <div class="row mt-2">
+                <div class="col-9">
+                    <p th:text="#{cart.provisional}">Tạm tính</p>
+                </div>
+                <div class="col-3">
+                    <strong>
+                        [[${#numbers.formatDecimal(total, 0, 'COMMA', 0,
+                        'POINT')}]]
+
+                    </strong>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-9">
+                    <p th:text="#{cart.total}">Tổng</p>
+                </div>
+                <div class="col-3">
+                    <strong>
+                        [[${#numbers.formatDecimal(total, 0, 'COMMA', 0,
+                        'POINT')}]]
+                    </strong>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-4">
+                <a class="btn btn-warning"
+                   style="width: 100%; color:white; background-color: orange; font-weight: 700;" href="/user/cart/order"
+                   role="button" th:text="#{cart.pay}">Tiền
+                    hành thanh toán</a>
+            </div>
+            <div class="row mt-3">
+                <p><i class="fa fa-tags" aria-hidden="true"></i> <th:block th:text="#{cart.discount}"></th:block></p>
+            </div>
+            <div class="row mt-3">
+                <input type="text" class="form-control" style="width: 100%;" placeholder="Mã ưu đãi">
+            </div>
+            <div class="row mt-4">
+                <a class="btn btn-secondary" style="width: 100%; font-weight: 700;" href="#"
+                   role="button" th:text="#{cart.apply}">Áp
+                    dụng</a>
+            </div>
+        </div>
+    </div>
+    <!-- Product -->
+</div>
+
+</body>
+</html>

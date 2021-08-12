@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<nav class="navbar" th:fragment="nav">
+    <input type="checkbox" id="check">
+    <label for="check">
+        <i class="fas fa-bars" id="btn"></i>
+        <i class="fas fa-times" id="cancel"></i>
+    </label>
+    <a th:href="@{'/home/index'}"><img class="logo" src="/images/logo/logolyly.png" alt="" srcset=""></a>
+    <ul>
+        <li><a href="/home/index"><th:block th:text="#{nav.home}"></th:block></a></li>
+        <li><a href="/home/product"><th:block th:text="#{nav.product}"></th:block></a></li>
+        <li>
+            <div class="d-flex justify-content-center h-100">
+                <div class="searchbar">
+                    <input class="search_input" style="padding: 0; height: 30px;" type="text" id="keywords"
+                           placeholder="Search...">
+                    <a onclick="mySearch()" class="search_icon"><i class="fas fa-search"></i></a>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <ul class="ul-right" id="ulright">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                <span th:if="#{nav.language_class} == 'vn'"
+                      class="flag-icon flag-icon-vn"></span>
+                <span th:if="#{nav.language_class} == 'us'"
+                      class="flag-icon flag-icon-us"></span></a>
+            <div class=" dropdown-menu" aria-labelledby="dropdown09">
+                <a class="dropdown-item" href="?lang=en"><span class="flag-icon flag-icon-us"> </span> English</a>
+                <a class="dropdown-item" href="?lang=vi"><span class="flag-icon flag-icon-vn"> </span> Vietnamese</a>
+            </div>
+        </li>
+        <li><a href="/user/cart"> <i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+        <li class="dropdown dropleft">
+            <a href="#" class="nav-link "  id="dropdownUser" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                <img th:if="${accountlogin!= null}"
+                     th:src="@{'/images/account/'+${accountlogin.image == '' ? 'user.png': accountlogin.image}}"
+                     style="width:32px;height: 32px; border-radius: 50%"/>
+                <i th:if="${accountlogin== null}" class="far fa-user"></i>
+            </a>
+            <div th:if="${accountlogin== null}" class="dropdown-menu" style="left: -120px" aria-labelledby="dropdownUser">
+                <a class="dropdown-item" href="/user/login" style="font-family: Montserrat;font-size: 16px"><th:block th:text="#{nav.login}"></th:block> </a>
+                <a class="dropdown-item" href="/home/signup" style="font-family: Montserrat;font-size: 16px"><th:block th:text="#{nav.registration}"></th:block></a>
+            </div>
+            <div th:if="${accountlogin!= null}" class="dropdown-menu" style="left: -120px" aria-labelledby="dropdownUser">
+                <a class="dropdown-item" href="/user/profile" style="font-family: Montserrat;font-size: 16px"> Thông
+                    tin tài khoản </a>
+                <a class="dropdown-item" href="/home/out" style="font-family: Montserrat;font-size: 16px"> Đăng
+                    xuất </a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>

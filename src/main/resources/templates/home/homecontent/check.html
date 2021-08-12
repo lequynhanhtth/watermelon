@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home/layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Watermelon</title>
+</head>
+<body>
+<div layout:fragment="content" class="wrapper fadeInDown">
+    <div id="formContent">
+
+        <form>
+            <img src="/images/success.png" width="320px">
+            <h2 style="padding-bottom:30px">[[${messageCheck}]]</h2>
+        </form>
+
+
+    </div>
+</div>
+
+</body>
+</html>

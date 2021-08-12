@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home/layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Thông tin</h1>
+
+    <div class="row">
+        <div class="container-fluid">
+            <form th:action="@{'/admin/profile/save'}" enctype="multipart/form-data" method="post" th:object="${account}">
+                <div class="row">
+                    <h3>Hồ sơ của tôi</h3>
+                </div>
+                <div class="row">
+                    <p>Quản lý thông tin hồ sơ để bảo bảo mật tài khoản</p>
+                </div>
+                <hr style="width: 700px;">
+                <input type="hidden" th:name="password" th:value="${accountlogin.password}">
+                <input type="hidden" th:name="admin" th:value="${accountlogin.admin}">
+                <input type="hidden" th:name="id" th:value="${accountlogin.id}">
+                <input type="hidden" th:name="image" th:value="${accountlogin.image}">
+                <input type="hidden" th:name="activity" th:value="${accountlogin.activity}">
+                <input type="hidden" th:name="email" th:value="${accountlogin.email}">
+                <input type="hidden" th:name="username" th:value="${accountlogin.username}">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row p-0 mt-3">
+                            <div class="col-3 text-right">
+                                <p>Tên đăng nhập</p>
+                            </div>
+                            <div class="col-9">
+                                <p style="font-weight: 300;">[[${accountlogin.username}]]</p>
+                            </div>
+                        </div>
+                        <div class="row p-0 mt-3">
+                            <div class="col-3 mt-2 text-right">
+                                <p>Tên</p>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                       th:value="${accountlogin.fullname}"
+                                       type="text"
+                                       th:name="fullname">
+                            </div>
+                        </div>
+                        <div class="row p-0 mt-3">
+                            <div class="col-3 text-right">
+                                <p>Email</p>
+                            </div>
+                            <div class="col-9">
+                                <p style="font-weight: 300;">[[${accountlogin.email}]]</p>
+                            </div>
+                        </div>
+                        <div class="row p-0 mt-3">
+                            <div class="col-3 mt-2 text-right">
+                                <p>Số điện thoại</p>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                       th:value="${accountlogin.phonenumber}"
+                                       type="text"
+                                       th:name="phonenumber">
+                            </div>
+                        </div>
+                        <div class="row p-0 mt-3">
+                            <div class="col-3 text-right">
+                                <p>Giới tính</p>
+                            </div>
+                            <div class="col-9">
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio"
+                                               th:name="gender" th:value="true"
+                                               th:checked="${accountlogin.gender}">
+                                        Nam
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio"
+                                               th:name="gender"
+                                               th:value="false"
+                                               th:checked="${accountlogin.gender==false}">
+                                        Nử
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-0 mt-3">
+                            <div class="col-3 mt-2 text-right">
+                                <p>Ngày sinh</p>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                       th:value="${#dates.format(accountlogin.birthday,'dd/MM/yyyy')}" type="text" th:name="getbirthday">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 pl-0">
+                        <div class="avatar-upload">
+                            <img id="previewImg" th:src="@{'/images/account/'+${accountlogin.image}}" alt="Placeholder">
+                            <div class="row mt-4  " style="margin-left:150px">
+                                <input type="file" style="width: 300px; " name="photo"
+                                       class="form-control-user"
+                                       onchange="previewFile(this);">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  p-0 mt-3">
+                    <button type="submit" style="margin-left: 50px;" class="btn btn-primary">Lưu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

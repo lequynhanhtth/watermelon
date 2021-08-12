@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home/layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Watermelon</title>
+</head>
+<body>
+<div layout:fragment="content" class="wrapper fadeInDown">
+    <div id="formContent">
+
+        <form>
+            <img src="/images/error.png" width="320px">
+            <h2 th:text="Lỗi"></h2>
+        </form>
+        <div id="formFooter">
+            <a class="underlineHover" style="font-size: 20px;font-family: Montserrat;font-weight: 600" href="/user/login">Đăng nhập</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

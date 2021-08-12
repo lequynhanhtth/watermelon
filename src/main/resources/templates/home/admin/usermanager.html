@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home/layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid m-4">
+    <div class="row">
+        <h3>Users</h3>
+    </div>
+    <div class="row">
+        <p>Quản lý User</p>
+    </div>
+    <hr style="width: 700px;">
+    <div class="row">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" th:classappend=" ${show == null ? 'active':''}" href="#banghaodon" role="tab"
+                   data-toggle="tab">Bảng User</a>
+            </li>
+            <li th:if="${accountpage != null}" class="nav-item">
+                <a class="nav-link" th:classappend=" ${show == true ? ' active':''}" href="#thongtin" role="tab"
+                   data-toggle="tab">Chi tiết User</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row mt-3">
+        <div class="tab-content" style="width: 90%;">
+            <div role="tabpanel" class="tab-pane }" th:classappend="${show == null ? ' in active ':'fade'}"
+                 id="banghaodon">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Fullname</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each=" x : ${accounts.content}">
+                        <th scope="row">[[${x.id }]]</th>
+                        <td>[[${x.username }]]</td>
+                        <td>[[${x.fullname }]]</td>
+                        <td>[[${x.email }]]</td>
+                        <td th:if="${x.gender != null }">[[${x.gender?"Nam":"Nử" }]]</td>
+                        <td th:if="${x.gender == null }"></td>
+                        <td><a class="btn btn-primary"
+                               th:href="@{'/admin/showuser/'+${x.id}}">Xem</a></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item " th:classappend="${accounts.number == 0 ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{'/admin/showusers?p='+${accounts.number}}"
+                               tabindex="-1">Previous</a>
+                        </li>
+
+                        <th:block th:each="i: ${#numbers.sequence(1, accounts.totalPages)}">
+                            <li class="page-item" th:classappend="${accounts.number+1 == i?'active':''}">
+                                <a class="page-link" th:href="@{'/admin/showusers?p='+${i}}" th:text="${i}"></a>
+                            </li>
+                        </th:block>
+                        <li class="page-item"
+                            th:classappend=" ${accounts.number + 1 == accounts.totalPages ? 'disabled' : ''}">
+                            <a class="page-link"
+                               th:href="@{'/admin/showusers?p='+${accounts.number+2}}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <th:block th:if="${accountpage != null}">
+                <div role="tabpanel" class="tab-pane" th:classappend="${show == true ? 'in active':'fade'} "
+                     id="thongtin">
+                    <form>
+                        <div class="row">
+
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <h3>User</h3>
+                                </div>
+                                <div class="row">
+                                    <p>Quản lý thông tin User</p>
+                                </div>
+
+                                <hr style="width: 1400px;margin-left:0 ;  "/>
+
+                                <div class="row" style="margin-top: 50px;">
+                                    <div class="col-8 ">
+                                        <div class="row p-0 mt-3">
+
+
+                                            <div class="col-3 mt-2 text-left">
+                                                <p>Username</p>
+                                            </div>
+                                            <div class="col-9">
+                                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                                       th:value="${accountpage.username}"
+                                                       type="text" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row p-0 mt-3">
+                                            <div class="col-3 mt-2 text-left">
+                                                <p>Họ và tên</p>
+                                            </div>
+                                            <div class="col-9">
+                                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                                       th:value="${accountpage.fullname}" type="text" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row p-0 mt-3">
+                                            <div class="col-3 mt-2 text-left">
+                                                <p>Email</p>
+                                            </div>
+                                            <div class="col-9">
+                                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                                       th:value="${accountpage.email}" type="text" readonly>
+                                            </div>
+                                        </div>
+                                        <div   class="row p-0 mt-3">
+                                            <div class="col-3 mt-2 text-left">
+                                                <p>Số điện thoại</p>
+                                            </div>
+                                            <div class="col-9">
+                                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                                       th:value="${accountpage.phonenumber != null ? accountpage.phonenumber : ''}" type="text" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row p-0 mt-3">
+                                            <div class="col-3 mt-2 text-left">
+                                                <p>Giới tính</p>
+                                            </div>
+                                            <div th:if="${accountpage.gender != null}" class="col-9">
+                                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                                       th:value="${accountpage.gender?'Nam':'Nử'}" type="text"
+                                                       readonly>
+                                            </div>
+                                            <div th:if="${accountpage.gender == null}" class="col-9">
+                                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                                      type="text"  readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row p-0 mt-3">
+                                            <div class="col-3 mt-2 text-left">
+                                                <p>Ngày sinh</p>
+                                            </div>
+                                            <div class="col-9">
+                                                <input class="form-control" style="width: 80%;font-weight: 300;"
+                                                       th:value="${accountpage.birthday!= null? #dates.format(accountpage.birthday,'dd/MM/yyyy'):''}"
+                                                       type="text" readonly/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div th:if="${accountpage.image != null}" class="col-4 pl-0">
+                                        <div class="avatar-upload">
+                                            <img id="previewImg" th:src="@{'/images/account/'+${accountpage.image != '' ? accountpage.image : 'user.png'} }"
+                                                 alt="Placeholder">
+                                            <div class="row mt-4 ml-4 text-center ">
+                                                <input type="hidden" style="width: 200px; padding: 0;" name="photo"
+                                                       class="form-control"
+                                                       onchange="previewFile(this);">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row  p-0 mt-3">
+
+                                    <a th:if="${accountpage.activity == true}" style="margin-left: 50px; "
+                                       class="btn btn-primary"
+                                       th:href="@{'/admin/account/delete/'+${accountpage.id}}">Khóa
+                                    </a>
+
+
+                                    <a th:if="${accountpage.activity == false}" style="margin-left: 50px; "
+                                       class="btn btn-primary"
+                                       th:href="@{'/admin/account/openban/'+${accountpage.id}}">Mở khóa
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </th:block>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home/layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Watermelon</title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid body-detail  title-web float-left pt-4">
+    <p>TRANG CHỦ / <strong>Áo lyly17</strong></p>
+    <div class="row mt-4 " style="height: 900px;">
+        <div class="col-6">
+            <img th:src="@{'/images/'+${productDetail.brand.id}+'/'+${productDetail.image1}}" height="80%" width="92%"
+                 alt="">
+        </div>
+        <div class="col-6">
+            <form th:action="@{'/user/cart/add'}" method="post">
+                <input type="hidden" th:name="id" th:value="${productDetail.id}">
+                <h2>[[${productDetail.name}]]</h2>
+                <div class="row m-0">
+                    <div class="is-divider"></div>
+                </div>
+                <div class="row m-0 mt-3">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                </div>
+                <div class="row m-0 mt-2">
+                    <h2>
+                        [[${#numbers.formatDecimal(productDetail.price, 0, 'COMMA', 0, 'POINT')}]] VND
+                    </h2>
+                </div>
+                <div class="row m-0 mt-2">
+                    <p>Bảng size chi tiết</p>
+                </div>
+                <div class="row m-0 mt-3">
+                    <img src="/images/20112020-dich-bang-size-quan-ao-trung-quoc-2.jpg" style="width: 100%;" alt=""
+                         srcset="">
+                </div>
+                <div class="row m-0 mt-4">
+                    <div class="col-4 p-0 m-0 mt-2">
+                        <p><strong>Size</strong></p>
+                    </div>
+                    <div class="col-8">
+                        <select th:name="size">
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="L">XL</option>
+                            <option value="L">2XL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row m-0 mt-4">
+                    <input type="number" value="1" class="form-control " style="width: 70px; margin-right: 30px;"
+                           th:name="soluong" min="1"
+                           id="">
+                    <input type="submit" class="btn btn-danger "
+                           style="border-radius: 99px; width:50%; font-size: 18px ;"
+                           value="Thêm vào giỏ hàng" th:disabled="${productDetail.quantity==0}">
+                </div>
+                <hr>
+                <p>Mã : [[${productDetail.id}]]</p>
+                <hr>
+                <p>Danh mục: [[${productDetail.category.name}]]</p>
+                <hr>
+                <p>Số lượng: [[${productDetail.quantity}]]</p>
+            </form>
+        </div>
+    </div>
+    <!-- Product -->
+    <!-- san pham tuong tu  -->
+    <div class="row m-0">
+        <h2>Sản phẩm tương tự</h2>
+    </div>
+    <div class="row my-4">
+        <div th:each="item : ${productdetails}" class="col-3 ">
+            <div class="card" style="height: 540px">
+                <a th:href="@{'/home/productdetail/'+${item.id}}" style="max-height: 370px" class="card-body">
+                    <div class="imgBox" style="height: 350px">
+                        <div th:if="${item.quantity == 0}" class="hethang text-center">
+                            <h2>Hết hàng</h2>
+                        </div>
+                        <img th:src="@{'/images/'+${item.brand.id}+'/'+${item.image1}}" alt="">
+                        <img th:src="@{'/images/'+${item.brand.id}+'/'+${item.image2}}" alt="">
+                    </div>
+                </a>
+                <div class="card-footer text-center titleproduct">
+                    <p>[[${item.category.name}]]</p>
+                    <a href="#">[[${item.name}]]</a>
+                    <br>
+                    <span class="fa fa-star" th:classappend=" ${item.rate >= 1 ? 'checked' : ''}"></span>
+                    <span class="fa fa-star" th:classappend=" ${item.rate >= 2 ? 'checked' : ''}"></span>
+                    <span class="fa fa-star" th:classappend=" ${item.rate >= 3 ? 'checked' : ''}"></span>
+                    <span class="fa fa-star" th:classappend=" ${item.rate >= 4 ? 'checked' : ''}"></span>
+                    <span class="fa fa-star" th:classappend=" ${item.rate >= 5 ? 'checked' : ''}"></span>
+                    <h3>
+                        [[${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}]] VND
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

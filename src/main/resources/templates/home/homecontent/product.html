@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home/layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Watermelon</title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid body-content  title-web float-left pt-4">
+    <p th:text="#{nav.home}">TRANG CHỦ / <strong th:text="#{nav.product}">SẢN PHẨM</strong></p>
+
+    <!-- Product -->
+    <div class="row pt-4 px-0">
+        <div class="col-3 px-0" style="margin-top: 100px;">
+            <p><strong style="font-size: 18px;" th:text="#{product.fillterbyprice}"></strong></p>
+            <div class="is-divider"></div>
+            <div class="row">
+                <div class="col-sm-12 pt-3 pr-4">
+                    <div id="slider-range"></div>
+                </div>
+            </div>
+            <div class="row slider-labels">
+                <div class="col-4 ">
+                    <form th:action="@{'/home/product/sort'}" method="post">
+                        <input type="hidden" th:name="min-value" id="min_value" th:value="${min == null ? 0:min}">
+                        <input type="hidden" th:name="max-value" id="max_value" th:value="${max== null ? 1500000:max}">
+                        <button class="btn btn-dark" type="submit"><th:block th:text="#{product.filter}"></th:block></button>
+                    </form>
+                </div>
+                <div class="col-8 text-right" style="max-width: 100%;">
+                    <strong th:text="#{product.price}">Giá :</strong>
+                    <strong><span id="slider-range-value1"></span><strong>-</strong> <span
+                            id="slider-range-value2"></span></strong>
+                </div>
+            </div>
+            <div class="row danhmucsp m-0 mt-4">
+                <h3 th:text="#{footer.categories}">Danh mục sản phẩm</h3>
+            </div>
+            <div class="row m-0">
+                <div class="is-divider"></div>
+            </div>
+            <div th:each="item : ${brandList}" class="row danhmucsp m-0  mt-4">
+                <a th:href="@{'/home/product/brandsort?brand='+${item.id}}" th:text="${item.name}"></a>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row hienthikq mx-5">
+                <div class="col-8"></div>
+                <div class="col-4">
+                    <p class="mb-2" th:text="#{product.fillterbyresults}">Hiển thị kết quả</p>
+                    <select id="mySelect" th:onchange="window.location.href = this.value ">
+                        <option value="/home/product/sortprice?field=createdate">
+                           <th:block th:text="#{product.new}"></th:block>
+                        </option>
+                        <option value="/home/product/sortprice?field=rate" >
+                            <th:block th:text="#{product.popularity}"></th:block>
+                        </option>
+                        <option value="/home/product/sortprice?field=price1" >
+                            <th:block th:text="#{product.sortoderlow}"></th:block>
+                        </option>
+                        <option value="/home/product/sortprice?field=price2" >
+                            <th:block th:text="#{product.sortoderhiegh}"></th:block>
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-4 mx-5">
+                <div  th:if="${pageProducts.content != null}" th:each=" item :${pageProducts.content} " class="col-4 mt-4">
+                    <div class="card" style="height: 540px">
+                        <a th:href="@{'/home/productdetail/'+${item.id}}" class="card-body" style="max-height: 370px">
+                            <div class="imgBox" style="height: 350px">
+                                <div th:if="${item.quantity == 0}" class="hethang text-center">
+                                    <h2 th:text="#{product.soldout}">Hết hàng</h2>
+                                </div>
+                                <img th:src="@{'/images/'+${item.brand.id}+'/'+${item.image1}}" alt="">
+                                <img th:src="@{'/images/'+${item.brand.id}+'/'+${item.image2}}" alt="">
+                            </div>
+                        </a>
+                        <div class="card-footer text-center titleproduct">
+                            <p th:text="${item.category.name}"></p>
+                            <a th:href="@{'/home/productdetail/'+${item.id}}" th:text="${item.name}"></a>
+                            <br>
+                            <span class="fa fa-star" th:classappend="${item.rate >= 1 ? 'checked' : ''}"></span>
+                            <span class="fa fa-star" th:classappend="${item.rate >= 2 ? 'checked' : ''}"></span>
+                            <span class="fa fa-star" th:classappend="${item.rate >= 3 ? 'checked' : ''}"></span>
+                            <span class="fa fa-star " th:classappend="${item.rate >= 4 ? 'checked' : ''}"></span>
+                            <span class="fa fa-star" th:classappend="${item.rate == 5 ? 'checked' : ''}"></span>
+                            <h3>
+                                [[${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}]] VND
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div th:if="${pageProducts.totalPages != 0}" class="row mt-4" id="centerText" style="font-size: 18px !important;">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${pageProducts.number == 0 ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{'/home/product?p='+${pageProducts.number}}" tabindex="-1">
+                                Previous</a>
+                        </li>
+
+                        <th:block th:each="i: ${#numbers.sequence(1, pageProducts.totalPages)}" >
+                            <li class="page-item" th:classappend="${pageProducts.number+1 == i?'active':''}">
+                                <a class="page-link" th:href="@{'/home/product?p='+${i}}" th:text="${i}"></a>
+                            </li>
+                        </th:block>
+
+                        <li class="page-item " th:classappend="${pageProducts.number + 1 == pageProducts.totalPages ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{'/home/product?p='+${pageProducts.number+2}}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function myCombobox() {
+        var x = document.getElementById("mySelect").value;
+        let a = document.createElement('a');
+        a.href = x;
+        a.click();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home/layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Watermelon</title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid profile mb-5">
+    <div class="row ">
+        <div class="col-3">
+            <div class="row">
+                <a href="/user/profile">Tài khoản của tôi</a>
+            </div>
+            <div class="row mt-3">
+                <a href="/user/profile/showchangepassword">Đổi mật khẩu</a>
+            </div>
+            <div class="row mt-3">
+                <a href="/user/profile/showorder">Đơn hàng</a>
+            </div>
+        </div>
+        <div class="col-9"
+             style="background-color: #fff;width: 100%  ;  box-shadow: 0 0 0 0.2rem rgba(212, 212, 212, 0.25);">
+            <div class="container-fluid m-4">
+                <div class="row">
+                    <h3>Đơn hàng</h3>
+                </div>
+                <div class="row">
+                    <p>Quản lý đơn hàng</p>
+                </div>
+                <hr style="width: 700px;">
+                <div class="row">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" th:classappend="${show == null ? 'active':''}" href="#banghaodon"
+                               role="tab"
+                               data-toggle="tab">Bảng hóa đơn</a>
+                        </li>
+                        <li th:if="${orderDetails != null}" class="nav-item">
+                            <a class="nav-link" th:classappend="${show == true ? 'active':''}" href="#thongtin"
+                               role="tab"
+                               data-toggle="tab">Hóa đơn chi
+                                tiết</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row mt-3">
+                    <div class="tab-content" style="width: 90%;">
+                        <div role="tabpanel" class="tab-pane" th:classappend="${show == null ? 'in active':'fade'}"
+                             id="banghaodon">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Createdate</th>
+                                    <th scope="col">Phonenumber</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="order : ${orders.content}">
+                                    <th scope="row">[[${order.id}]]</th>
+                                    <td>[[${order.address}]]</td>
+                                    <td>[[${order.createdate}]]</td>
+                                    <td>[[${order.phonenumber}]]</td>
+                                    <td>[[${order.status}]]</td>
+                                    <td><a class="btn btn-primary" style="font-size: 16px;"
+                                           th:href="@{'/user/profile/showorderdetail?id='+${order.id}}">Xem</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <nav>
+                                <ul class="pagination" >
+                                    <li class="page-item" th:if=" ${orders.number == 0 ? 'disabled' : ''}">
+                                        <a class="page-link"  style="font-size: 16px" th:href="@{'/user/profile/showorder?p='+${orders.number}}"
+                                           tabindex="-1">Previous</a>
+                                    </li>
+                                    <th:block th:each="i: ${#numbers.sequence(1, orders.totalPages)}">
+                                        <li class="page-item" th:classappend="${orders.number+1 == i ? 'active':''}">
+                                            <a class="page-link"  style="font-size: 16px"
+                                               th:href="@{'/user/profile/showorder?p='+${i}}">[[${i}]]</a>
+                                        </li>
+                                    </th:block>
+                                    <li class="page-item"
+                                        th:if="${orders.number + 1 == orders.totalPages ? 'disabled' : ''}">
+                                        <a class="page-link"  style="font-size: 16px"
+                                           th:href="@{'/user/profile/showorder?p='+${orders.number+2}}">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div th:if="${orderDetails != null}" role="tabpanel"
+                             class="tab-pane" th:classappend="${show == true ? 'in active':'fade'}" id="thongtin">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Size</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="item : ${orderDetails}">
+                                    <th scope="row">[[${item.id}]]</th>
+                                    <td>[[${item.product.name}]]</td>
+                                    <td>[[${item.quantity}]]</td>
+                                    <td>[[${item.total}]]</td>
+                                    <td>[[${item.size}]]</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div th:if="${showremove == true}" class="row  p-0 mt-3">
+                                <a style="margin-left: 50px;" class="btn btn-danger"
+                                   th:href="@{'/user/profile/removeOrder?id='+${orderId}}">Hủy đơn
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
